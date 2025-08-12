@@ -15,7 +15,7 @@ public class StoredGrids {
 
     public void storeGrid(Grid grid) {
         if (currentIndex < grids.length) {
-            grids[currentIndex] = grid;
+            grids[currentIndex] = new Grid(grid);
             currentIndex++;
         } else {
             currentIndex = 0;
@@ -32,5 +32,14 @@ public class StoredGrids {
 
         return retGrids;
 
+    }
+
+    public Boolean matchGrid(Grid grid) {
+        for (Grid storedGrid : grids) {
+            if (storedGrid.equals(grid)) {
+                return true; // Found a matching grid
+            }
+        }
+        return false; // No match found
     }
 }

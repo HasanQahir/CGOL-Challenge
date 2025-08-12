@@ -8,9 +8,6 @@ public class StoredGrids {
 
     public StoredGrids() {
         grids = new Grid[10]; // We want to store up to 10 grids
-        for (int i = 0; i < grids.length; i++) {
-            grids[i] = new Grid(); // Initialize each grid
-        }
     }
 
     public void storeGrid(Grid grid) {
@@ -19,7 +16,7 @@ public class StoredGrids {
             currentIndex++;
         } else {
             currentIndex = 0;
-            grids[currentIndex] = grid; // Overwrite the oldest grid
+            grids[currentIndex] = new Grid(grid); // Overwrite the oldest grid
         }
     }
 
@@ -35,11 +32,22 @@ public class StoredGrids {
     }
 
     public Boolean matchGrid(Grid grid) {
+        outer:
         for (Grid storedGrid : grids) {
-            if (storedGrid.equals(grid)) {
-                return true; // Found a matching grid
+            for (int i = 0; i < storedGrid.board.length; i++) {
+                for (int j = 0; j < storedGrid.board[0].length; j++) {
+                    int a = (int)storedGrid.board[i][j];
+                    int b = (int)grid.board[i][j];
+                    // System.out.println("Comparing " + a + " with " + b);
+                    if (a != b) {
+                        // System.out.println("Found mismatch!");
+                        break outer;
+                    }
+                }
             }
+        return true; // Found a matching grid    
         }
-        return false; // No match found
+    
+    return false; // No match found
     }
 }

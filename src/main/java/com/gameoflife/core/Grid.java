@@ -1,7 +1,5 @@
 package com.gameoflife.core;
 
-
-
 public class Grid {
 
     int[][] board;
@@ -9,11 +7,17 @@ public class Grid {
 
     public Grid() {
         board = new int[60][40];
-        generation = 0;
+        generation = 1;
     }
     public Grid(Grid grid) {
-        this.board = grid.board;
-        this.generation = grid.generation;
+        board = new int[60][40];
+        // Dumb way to deep clone grid
+        for (int i = 0; i < grid.board.length; i++) {
+            for (int j = 0; j < grid.board[0].length; j++) {
+                board[i][j] = grid.board[i][j];
+            }
+        }
+        generation = grid.generation;
     }
     
     public int countLiveCells() {
@@ -38,7 +42,9 @@ public class Grid {
 
                 // Check bounds
                 if (newX >= 0 && newX < board.length && newY >= 0 && newY < board[0].length) {
-                    cells++;
+                    if (board[newX][newY] == 1) {
+                        cells++;
+                    }
                 } else {
                     continue; // Out of bounds, treat as dead cell
                 }
@@ -56,8 +62,6 @@ public class Grid {
             // Cell is currently alive
             if (aliveCount < 2 || aliveCount > 3) {
                 board[x][y] = 0; // Cell dies
-            } else if (aliveCount == 2) {
-                board[x][y] = 1; // Cell remains alive
             }
         } else {
             // Cell is currently dead

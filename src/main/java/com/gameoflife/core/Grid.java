@@ -41,6 +41,8 @@ public class Grid {
             // Cell is currently alive
             if (aliveCount < 2 || aliveCount > 3) {
                 grid[x][y] = 0; // Cell dies
+            } else if (aliveCount == 2) {
+                grid[x][y] = 1; // Cell remains alive
             }
         } else {
             // Cell is currently dead
